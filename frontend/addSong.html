@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dodawanie i Losowanie Piosenek</title>
+    <script src="addSong.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+        text-align: center;
+      }
+
+      #container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 2px solid #007bff;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #333;
+        color: #fff;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        margin-right: 10px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+        border-bottom: 1px solid #555;
+      }
+      #text {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        text-align: left;
+      }
+      p#tekst-piosenki {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      /* #result {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        text-align: left;
+      } */
+
+      #result {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+      }
+
+      #left {
+        flex: 1;
+        text-align: left;
+      }
+
+      #right {
+        flex: 1;
+        text-align: right;
+      }
+
+      #songImg {
+        max-width: 200px;
+        max-height: 200px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .songInfo {
+        color: #0056b3;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Dodawanie Piosenek</h1>
+      <input type="text" id="artist" placeholder="Wykonawca:" />
+      <input type="text" id="title" placeholder="Tytuł:" />
+      <button id="add">Dodaj piosenkę</button>
+      <button id="preview" onclick="preview()">zobacz podglad</button
+      ><br /><br />
+      <div id="result">
+        <div id="left">
+          <p>artist: <span class="songInfo" id="artistResult">artist</span></p>
+          <p>title: <span class="songInfo" id="titleResult">song</span></p>
+        </div>
+        <div id="right">
+          <img
+            id="songImg"
+            src="https://images.genius.com/02de3232ff8739527273c4c95c806bba.500x500x1.jpg"
+          />
+        </div>
+      </div>
+      <div id="text">
+        <h1>Tekst Piosenki</h1>
+        <p id="tekst-piosenki">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
+          feugiat ex. Integer bibendum quam sed nulla dictum, a euismod dolor
+          posuere. Nullam ac ligula eget lorem mattis cursus. Proin non odio
+          tristique, euismod lectus nec, blandit odio. Nullam eu elit a massa
+          commodo dictum a non justo. ... (Tutaj znajduje się cały tekst
+          piosenki)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

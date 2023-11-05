@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zgadywanie Piosenek</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+        text-align: center;
+      }
+
+      #container {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: #1f1f1f;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+
+      p#fragment-tekstu {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 2px solid #007bff;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #333;
+        color: #fff;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        margin-right: 10px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      button#podpowiedz {
+        background-color: #ff7f50;
+      }
+
+      button#podpowiedz:hover {
+        background-color: #ff6347;
+      }
+
+      p#wynik {
+        font-size: 20px;
+        margin-top: 20px;
+        color: #009900;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Zgadywanie Piosenek</h1>
+      <p id="fragment-tekstu">
+        Fragment tekstu piosenki: "To jest przykład fragmentu tekstu."
+      </p>
+      <input type="text" id="tekst" placeholder="Wprowadź swoją odpowiedź" />
+      <button id="sprawdz">Sprawdź</button>
+      <button id="podpowiedz">Podpowiedź</button>
+      <p id="wynik"></p>
+    </div>
+  </body>
+</html>

@@ -1,9 +1,10 @@
-import Song from "./Song";
+import SongModel from "./Song";
 import { apiKey } from "./server";
 import axios from "axios";
 interface hit {
   result: {
     url: string;
+    song_art_image_url: string;
   };
 }
 interface Data {
@@ -16,7 +17,6 @@ export default async function searchSong(title: string, artist: string) {
     "https://api.genius.com/search?q=" +
     encodeURIComponent(getTitle(title, artist)) +
     `&access_token=${apiKey}`;
-
   let data: Data;
   try {
     const response = await fetch(url, {
