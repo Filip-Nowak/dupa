@@ -1,17 +1,18 @@
+let selectedSong = null;
+
 async function fetchSong(artist, title) {
   console.log("A" + artist + "T" + title);
   const response = await fetch(
-    "http://localhost:3000/getSong/" + artist + "/" + title
+    "http://localhost:3000/searchSong/" + artist + "/" + title
   );
   const songData = await response.json();
   return songData;
 }
+
 async function preview() {
   const artist = document.getElementById("artist").value;
   const title = document.getElementById("title").value;
   const songData = await fetchSong(artist, title);
-  //   document.getElementById("artistResult").innerHtml = songData.artist;
-  //   document.getElementById("titleResult").innerHtml = songData.title;
   document.getElementById("left").innerHTML =
     "<p>artist: <span class='songInfo' id=`artistResult`>" +
     songData.artist +
@@ -27,4 +28,18 @@ async function preview() {
       songData.lyrics[i] + "<br>";
   }
   console.log(songData);
+  selectedSong = songData;
+}
+
+async function addSong() {
+  if (selectedSong != null) {
+    const response = await fetch("http://localhost:3000/saveSong", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(selectedSong),
+    });
+    console.log(await response.json());
+  } else {
+    console.log("nie wybrano pisoenki");
+  }
 }
