@@ -3,15 +3,24 @@ let selectedSong = null;
 async function fetchSong(artist, title) {
   console.log("A" + artist + "T" + title);
   const response = await fetch(
-    "http://localhost:3000/searchSong/" + artist + "/" + title
+    "http://localhost:3000/searchSong/" +
+      artist.toLowerCase() +
+      "/" +
+      title.toLowerCase()
+  );
+  console.log(
+    "http://localhost:3000/searchSong/" +
+      artist.toLowerCase() +
+      "/" +
+      title.toLowerCase()
   );
   const songData = await response.json();
   return songData;
 }
 
 async function preview() {
-  const artist = document.getElementById("artist").value;
-  const title = document.getElementById("title").value;
+  const artist = document.getElementById("artist").value.toLowerCase();
+  const title = document.getElementById("title").value.toLowerCase();
   const songData = await fetchSong(artist, title);
   document.getElementById("left").innerHTML =
     "<p>artist: <span class='songInfo' id=`artistResult`>" +

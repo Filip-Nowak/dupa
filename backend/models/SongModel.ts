@@ -1,6 +1,6 @@
 import { listenerCount } from "process";
-import searchSong from "./searchSong";
-import { apiKey } from "./server";
+import { searchSong } from "../services/songService";
+import { apiKey } from "../server";
 import axios from "axios";
 const cheerio = require("cheerio-without-node-native");
 export default class SongModel {
@@ -50,7 +50,6 @@ export async function createSong(artist: string, title: string) {
     return false;
   } else {
     const lyrics = await getLyrics(song.response.hits[0].result.url);
-    console.log(song.response.hits[0].result.song_art_image_url);
     return new SongModel(
       title,
       artist,

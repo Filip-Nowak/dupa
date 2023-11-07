@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import SongModel from "./Song";
+import SongModel from "../models/SongModel";
 export function getSongs() {
   const output: Record<string, string[]> = {};
   const data = fs.readFileSync("data/songlist.txt", { encoding: "utf-8" });
@@ -29,21 +29,14 @@ export function containsSong(song: SongModel) {
 }
 
 export function addSongToFile(song: SongModel) {
-  fs.readFile("data/songlist.txt", "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    fs.writeFile(
-      "data/songlist.txt",
-      data + song.artist + "\n" + song.title + "\n",
-      "utf-8",
-      (err) => {
-        if (err) {
-          console.error("Błąd zapisu pliku:", err);
-          return;
-        }
-      }
-    );
-  });
+  const data = fs.readFileSync("data/songlist.txt", "utf-8");
+  fs.writeFileSync(
+    "data/songlist.txt",
+    data + song.artist + "\n" + song.title + "\n",
+    "utf-8"
+  );
+}
+
+export function getStringFromTest() {
+  return fs.readFileSync("test.txt", { encoding: "utf-8" });
 }

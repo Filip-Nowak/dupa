@@ -43,7 +43,7 @@
         color: #fff;
       }
 
-      /* button {
+      button {
         background-color: #007bff;
         color: #fff;
         border: none;
@@ -52,6 +52,7 @@
         cursor: pointer;
         font-size: 18px;
         margin-right: 10px;
+        margin-bottom: 10px;
       }
 
       button:hover {
@@ -64,7 +65,7 @@
 
       button#podpowiedz:hover {
         background-color: #ff6347;
-      } */
+      }
 
       p#wynik {
         font-size: 20px;
@@ -75,28 +76,26 @@
         background-color: #333;
         width: 200px;
       }
-      .menuBtn {
-        width: 100%;
-        height: 50px;
-        background-color: #007bff;
-        border: none;
-        border-radius: 10px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        color: darkblue;
-        font-size: 30px;
-      }
-      a {
-        text-decoration: none;
+      #next {
+        background-color: green;
       }
     </style>
+    <script src="play.js"></script>
   </head>
   <body>
     <div id="container">
       <h1>Zgadywanie Piosenek</h1>
-      <a href="play.html"><div class="menuBtn">graj</div></a>
-      <a href="addSong.html"><div class="menuBtn">zarzadzaj tekstami</div></a>
-      <a href="xd"><div class="menuBtn">opcje</div></a>
+      <p id="fragment-tekstu">"To jest przykład fragmentu tekstu."</p>
+      <div id="artistHint">
+        Autor:
+        <button id="artistHintButton" onclick="showHint()">odkryj</button>
+      </div>
+      <br />
+      <input type="text" id="tekst" placeholder="Wprowadź swoją odpowiedź" />
+      <button id="sprawdz" onclick="checkAnswer()">Sprawdź</button>
+      <button id="ff">Poddaj sie</button>
+      <button id="next" onclick="nextQuest()">losuj nastepna</button>
+      <p id="wynik"></p>
     </div>
   </body>
 </html>
