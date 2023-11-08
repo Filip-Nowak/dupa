@@ -22,22 +22,28 @@ async function preview() {
   const artist = document.getElementById("artist").value.toLowerCase();
   const title = document.getElementById("title").value.toLowerCase();
   const songData = await fetchSong(artist, title);
+  console.log(songData);
+  if (!songData.info.status) {
+    console.log("nie udalo sie znalesc");
+    return;
+  }
+  const song = songData.song;
   document.getElementById("left").innerHTML =
     "<p>artist: <span class='songInfo' id=`artistResult`>" +
-    songData.artist +
+    song.artist +
     " </span></p><p>title: <span class='songInfo' id='titleResult'>" +
-    songData.title +
+    song.title +
     "</span></p>";
 
   document.getElementById("right").innerHTML =
-    "<img id='songImg' src='" + songData.imgUrl + "'/>";
+    "<img id='songImg' src='" + song.imgUrl + "'/>";
   document.getElementById("tekst-piosenki").innerHTML = "";
-  for (let i = 0; i < songData.lyrics.length; i++) {
+  for (let i = 0; i < song.lyrics.length; i++) {
     document.getElementById("tekst-piosenki").innerHTML +=
-      songData.lyrics[i] + "<br>";
+      song.lyrics[i] + "<br>";
   }
-  console.log(songData);
-  selectedSong = songData;
+  console.log(song);
+  selectedSong = song;
 }
 
 async function addSong() {
@@ -45,7 +51,10 @@ async function addSong() {
     const response = await fetch("http://localhost:3000/saveSong", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(selectedSong),
+      body: JSON.stringify({
+        artist: selectedSong.artist,
+        title: selectedSong.title,
+      }),
     });
     console.log(await response.json());
   } else {

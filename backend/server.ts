@@ -55,11 +55,11 @@ app.post("/postxdd", (req: Request, res: Response) => {
 //   });
 // });
 
-app.post("/saveSong", (req: Request, res: Response) => {
-  const song = req.body;
-  saveSong(song);
-  res.send({ xd: "xdf" });
-});
+// app.post("/saveSong", (req: Request, res: Response) => {
+//   const song = req.body;
+//   saveSong(song);
+//   res.send({ xd: "xdf" });
+// });
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
@@ -73,7 +73,6 @@ app.post("/saveSong", (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
-
 // app.get("/getSongs", (req: Request, res: Response) => {});
 
 // app.get("/getQuest", async (req: Request, res: Response) => {

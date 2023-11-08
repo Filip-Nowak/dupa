@@ -1,21 +1,24 @@
 import QuestModel from "../models/QuestModel";
 import SongModel, { createSong } from "../models/SongModel";
 import { getSongs } from "./fileOperations";
-import { getAmountOfSongs, getSongById } from "./saveSong";
+import { getAmountOfSongs, getSongById } from "../services/songService";
+import { DTO } from "../interfaces/interfaces";
+import { stat } from "fs";
 
 export default async function getRandomQuest() {
   const songs = getSongs();
   const length = getAmountOfSongs(songs);
-  const index = Math.floor(Math.random() * length);
-  console.log(index);
-  //const song=getSongById();
-  const songInfo: string[] = getSongById(index, songs);
-  const song = await createSong(songInfo[0], songInfo[1]);
-  if (song != false) {
-    const line = song.lyrics[Math.floor(Math.random() * song.lyrics.length)];
-    const quest = new QuestModel(line, song);
-    //console.log(quest);
-    return quest;
+  if (length == 0) {
+    return {
+      info: { status: false, description: "no are songs saved" },
+    } as DTO;
   }
-  return { error: "nei znaleziono" };
+  const index = Math.floor(Math.random() * length);
+  const song = getSongById(index, songs);
+  if (song == false) {
+    return { info: { status: false, description: "song not found" } } as DTO;
+  }
+  const line = song.lyrics[Math.floor(Math.random() * song.lyrics.length)];
+  const quest = new QuestModel(line, song);
+  return { info: { status: true, description: "ok" }, quest: quest } as DTO;
 }

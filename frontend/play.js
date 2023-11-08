@@ -3,8 +3,13 @@ async function nextQuest() {
   const quest = getRandomQuest();
 }
 async function getRandomQuest() {
-  const data = await fetch("http://localhost:3000/getQuest");
-  currentQuest = await data.json();
+  const response = await fetch("http://localhost:3000/getQuest");
+  const data = await response.json();
+  if (!data.info.status) {
+    console.log(data.info.description);
+    return;
+  }
+  currentQuest = data.quest;
   document.getElementById("fragment-tekstu").innerHTML = currentQuest.text;
   document.getElementById("artistHint").innerHTML =
     "Autor: <button id='artistHintButton' onclick='showHint()'>odkryj</button>";
@@ -20,4 +25,7 @@ function checkAnswer() {
   } else {
     console.log("chuj ci w dupe");
   }
+}
+function forfeit() {
+  console.log(currentQuest.song.title);
 }

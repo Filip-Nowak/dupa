@@ -1,3 +1,4 @@
+import QuestModel from "../models/QuestModel";
 import SongModel from "../models/SongModel";
 export interface GeniusData {
   response: {
@@ -10,6 +11,7 @@ export interface DTO {
     description: string;
   };
   song?: SongModel;
+  quest?: QuestModel;
 }
 export interface GeniusSong {
   result: {

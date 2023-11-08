@@ -4,14 +4,35 @@ const cheerio = require("cheerio-without-node-native");
 import {
   addSongToFile,
   containsSong,
+  getSongFromFile,
   getStringFromTest,
 } from "../utils/fileOperations";
 import { apiKey } from "../server";
 import { DTO, GeniusData } from "../interfaces/interfaces";
-export function saveSong(song: SongModel) {
-  if (!containsSong(song)) {
-    addSongToFile(song);
+
+export async function saveSong(artist: string, title: string) {
+  const response = await searchSong(artist, title);
+  if (!response.info.status) {
+    console.log("error: " + response.info.description);
+    return response;
   }
+  //@ts-ignore
+  const song: SongModel = response.song;
+
+  //   if (!containsSong(song)) {
+  //     addSongToFile(song);
+  //   }
+  if (!containsSong(song.artist, song.title)) {
+    await addSongToFile(song);
+    return { info: { status: true, description: "song added to file" } } as DTO;
+  }
+  return {
+    info: {
+      status: false,
+      description:
+        "song '" + song.artist + ": " + song.title + "'is already saved",
+    },
+  } as DTO;
 }
 
 export function getAmountOfSongs(songs: Object) {
@@ -26,7 +47,9 @@ export function getAmountOfSongs(songs: Object) {
 export function getSongById(id: number, songs: Object) {
   const songsAsArr = Object.entries(songs);
   let arr: string[][] = [];
-
+  if (songsAsArr.length == 0) {
+    return false;
+  }
   for (let i = 0; i < songsAsArr.length; i++) {
     for (let j = 0; j < songsAsArr[i][1].length; j++) {
       const artist = songsAsArr[i][0];
@@ -34,38 +57,49 @@ export function getSongById(id: number, songs: Object) {
       arr.push([artist, songsAsArr[i][1][j]]);
     }
   }
-  console.log(arr);
-  return arr[id];
+  const song = getSongFromFile(arr[id][0], arr[id][1]);
+  return song;
 }
 
 export async function saveMultipleSongs(songsStr: string) {
-  //   songsStr = getStringFromTest().trim().toLowerCase();
-  //   console.log(songsStr);
-  //   const arr = songsStr.split("\n");
-  //   let i = 0;
-  //   arr.forEach(async (song) => {
-  //     if (i == arr.length) return;
-  //     let artist: string;
-  //     let title: string;
-  //     if (song.includes("___")) {
-  //       artist = song.split("___-")[0].trim();
-  //       title = song.split("___-")[1].trim();
-  //     } else {
-  //       artist = song.split("-")[0].trim();
-  //       title = song.split("-")[1].trim();
-  //     }
-  //     console.log("artust: " + artist + " " + title);
-  //     const s = await createSong(artist, title);
-  //     if (s == false) {
-  //       console.log("nie znaleziono");
-  //       return;
-  //     }
-  //     await saveSong(s);
-  //     i++;
-  //   });
+  songsStr = getStringFromTest().trim().toLowerCase();
+  const arr = songsStr.split("\n");
+  const failures = [];
+  for (let i = 0; i < arr.length; i++) {
+    const str = arr[i].split(" - ");
+    if (str.length != 2) {
+      failures.push(str);
+      continue;
+    }
+    const artist = str[0].trim();
+    const title = str[1].trim();
+    console.log(artist + ":" + title);
+    await saveSong(artist, title);
+  }
+  // arr.forEach(async (song) => {
+  //   if (i == arr.length) return;
+  //   let artist: string;
+  //   let title: string;
+  //   if (song.includes("___")) {
+  //     artist = song.split("___-")[0].trim();
+  //     title = song.split("___-")[1].trim();
+  //   } else {
+  //     artist = song.split("-")[0].trim();
+  //     title = song.split("-")[1].trim();
+  //   }
+  //   console.log("artust: " + artist + " " + title);
+  //   const s = await createSong(artist, title);
+  //   if (s == false) {
+  //     console.log("nie znaleziono");
+  //     return;
+  //   }
+  //   await saveSong(s);
+  //   i++;
+  // });
+  console.log("xhudj");
 }
 
-export async function searchSong(title: string, artist: string) {
+export async function searchSong(artist: string, title: string) {
   const url =
     "https://api.genius.com/search?q=" +
     encodeURIComponent(getTitle(title, artist)) +
@@ -100,6 +134,7 @@ export async function searchSong(title: string, artist: string) {
       geniusData.response.hits[0].result.song_art_image_url
     ),
   };
+  console.log(data);
   return data;
 }
 const getTitle = (title: string, artist: string) => {

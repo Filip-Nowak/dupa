@@ -44,20 +44,20 @@ async function getLyrics(url: string) {
 }
 export async function createSong(artist: string, title: string) {
   //const song = new Song(title, artist);
-  let song = await searchSong(title, artist);
-  if (song == false) {
-    console.log("nie znaleziono");
-    return false;
-  } else {
-    const lyrics = await getLyrics(song.response.hits[0].result.url);
-    return new SongModel(
-      title,
-      artist,
-      song.response.hits[0].result.url,
-      formatLyrics(lyrics),
-      song.response.hits[0].result.song_art_image_url
-    );
-  }
+  // let song = await searchSong(title, artist);
+  // if (song == false) {
+  //   console.log("nie znaleziono");
+  //   return false;
+  // } else {
+  //   const lyrics = await getLyrics(song.response.hits[0].result.url);
+  //   return new SongModel(
+  //     title,
+  //     artist,
+  //     song.response.hits[0].result.url,
+  //     formatLyrics(lyrics),
+  //     song.response.hits[0].result.song_art_image_url
+  //   );
+  // }
 }
 
 function formatLyrics(lyrics: string) {
